@@ -1,0 +1,54 @@
+﻿@page
+@model Housekeeping.Pages.IndexModel
+@{
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Housekeeping</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <br />
+        <h2 class="text-info">Log in</h2>
+        <br />
+        <div class="border container" style="padding:30px;">
+            <form method="post">
+                <label class="text-danger">Invalid Username or Password</label>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>User Name</label>
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="User.UserName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label>Password</label>
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="User.Password" type="password" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <input type="submit" value="Log In" class="btn btn-primary form-control"
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</div>
+
+
+
