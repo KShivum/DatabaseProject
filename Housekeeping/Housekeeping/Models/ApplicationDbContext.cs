@@ -14,6 +14,9 @@ namespace Housekeeping.Models
         }
         public DbSet<User> User { get; set; }
 
+        public DbSet<Room> Room { get; set; }
+        public DbSet<Log> Log { get; set; }
+
     }
 
 }
