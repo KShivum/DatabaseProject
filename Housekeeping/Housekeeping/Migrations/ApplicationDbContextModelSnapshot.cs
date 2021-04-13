@@ -23,7 +23,7 @@ namespace Housekeeping.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AssignedEmployee")
+                    b.Property<int?>("AssignedEmployee")
                         .HasColumnType("int");
 
                     b.Property<int>("Assignee")

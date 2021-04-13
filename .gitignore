@@ -13,6 +13,7 @@ Housekeeping/.vs/
 *.userosscache
 *.sln.docstates
 
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -20,20 +21,20 @@ Housekeeping/.vs/
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
+Housekeeping/Housekeeping/[Dd]ebug/
+Housekeeping/Housekeeping/[Dd]ebugPublic/
+Housekeeping/Housekeeping/[Rr]elease/
+Housekeeping/Housekeeping/[Rr]eleases/
+Housekeeping/Housekeeping/x64/
+Housekeeping/Housekeeping/x86/
+Housekeeping/Housekeeping/[Ww][Ii][Nn]32/
+Housekeeping/Housekeeping/[Aa][Rr][Mm]/
+Housekeeping/Housekeeping/[Aa][Rr][Mm]64/
+Housekeeping/Housekeeping/bld/
+Housekeeping/Housekeeping/bin/
+Housekeeping/Housekeeping/obj/
+Housekeeping/Housekeeping/[Ll]og/
+Housekeeping/Housekeeping/[Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

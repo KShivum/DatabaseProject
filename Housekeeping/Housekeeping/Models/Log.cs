@@ -14,7 +14,7 @@ namespace Housekeeping.Models
         public int RoomNo { get; set; }
         [Required]
         public int Assignee { get; set; }
-        public int AssignedEmployee { get; set; }
+        public int? AssignedEmployee { get; set; }
         [Required]
         public string StatusChangedFrom { get; set; }
         [Required]
