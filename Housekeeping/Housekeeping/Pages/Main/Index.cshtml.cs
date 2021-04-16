@@ -50,6 +50,7 @@ namespace Housekeeping.Pages.Main
             }
             var roomPrev = await db.Room.FindAsync(roomNo);
             var roomNew = roomPrev;
+            var oldStatus = roomPrev.Status;
             roomNew.Status = status;
             roomNew.AssignedEmployee = empId;
             var log = new Log();
@@ -58,7 +59,7 @@ namespace Housekeeping.Pages.Main
             log.RoomNo = roomNo;
             log.Assignee = tempUserId;
             log.AssignedEmployee = empId;
-            log.StatusChangedFrom = roomPrev.Status;
+            log.StatusChangedFrom = oldStatus;
             log.StatusChangedTo = status;
             log.Date = DateTime.Now;
 
