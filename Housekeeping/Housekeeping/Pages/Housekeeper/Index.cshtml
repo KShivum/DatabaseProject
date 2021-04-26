@@ -1,4 +1,50 @@
 ﻿@page
 @model Housekeeping.Pages.Housekeeper.IndexModel
 @{
+    Layout = null;
 }
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@ViewData["Title"] - Housekeeping</title>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<main class="container">
+    <main role="main" class="pb-3">
+
+        <h1 class="text-info">Hello @Model.LoginUser.FirstName</h1>
+
+        <div class="col-12 border p-3 mt-3">
+            <form method="post">
+                <table class="table table-striped">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="Rooms.FirstOrDefault().RoomNo"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Rooms.FirstOrDefault().Status"></label>
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.Rooms)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.RoomNo)
+                            </td>
+                            <td>
+                                <button asp-page-handler="ChangeStatus" asp-route-roomNo="@item.RoomNo" asp-route-assignedEmployee="@item.AssignedEmployee" asp-route-status="Clean" asp-route-user="@Model.LoginUser" class="btn btn-info btn-sm text-white">Clean</button>
+                                <button asp-page-handler="ChangeStatus" asp-route-roomNo="@item.RoomNo" asp-route-assignedEmployee="@item.AssignedEmployee" asp-route-status="Inspected" asp-route-user="@Model.LoginUser" class="btn btn-success btn-sm text-white">Inspected</button>
+                                <button asp-page-handler="ChangeStatus" asp-route-roomNo="@item.RoomNo" asp-route-assignedEmployee="@item.AssignedEmployee" asp-route-status="Dirty" asp-route-user="@Model.LoginUser" class="btn btn-secondary btn-sm text-white">Dirty</button>
+                                <button asp-page-handler="ChangeStatus" asp-route-roomNo="@item.RoomNo" asp-route-assignedEmployee="@item.AssignedEmployee" asp-route-status="Do Not Disturb" asp-route-user="@Model.LoginUser" class="btn btn-danger btn-sm text-white">Do Not Disturb</button>
+                                <button asp-page-handler="ChangeStatus" asp-route-roomNo="@item.RoomNo" asp-route-assignedEmployee="@item.AssignedEmployee" asp-route-status="Maintainance Required" asp-route-user="@Model.LoginUser" class="btn btn-warning btn-sm text-white">Maintainance required</button>
+                                <label class="text-info">Currently: @item.Status</label>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </form>
+        </div>
+        </main>
+</div>
