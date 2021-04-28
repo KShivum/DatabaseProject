@@ -6,6 +6,7 @@ using Housekeeping.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 namespace Housekeeping.Pages.Main
@@ -40,6 +41,47 @@ namespace Housekeeping.Pages.Main
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
+
+
+            //string _cs = "";
+            //string _users = "";
+            //using (MySqlConnection connection = new MySqlConnection(_cs))
+            //{
+            //    var _rooms = new Dataset();
+            //    MySqlDataAdapter adapter = new MySqlDataAdapter($"Select * from users = {_users}", _cs);
+            //    adapter.Fill(_rooms);
+            //    var Employees = new Dataset();
+            //    MySqlDataAdapter adapter2 = new MySqlDataAdapter($"Select * from users = {_users}", _cs);
+            //    adapter2.Fill(Employees);
+            //    int clean = 0;
+            //    int inspected = 0;
+            //    int dirty = 0;
+            //    int donotdisturb = 0;
+            //    int maintReq = 0;
+
+            //    for (int i = 0; i < _rooms.Tables[0].Rows.Count; i++)
+            //    {
+            //        if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 1)
+            //        {
+            //            clean++;
+            //        }
+            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 2)
+            //        {
+            //            inspected++;
+            //        }
+            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 3)
+            //        {
+            //            dirty++;
+            //        }
+            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 4)
+            //        {
+            //            donotdisturb++;
+            //        }
+            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 5)
+            //        {
+            //            maintReq++;
+            //        }
+            //    }
 
 
         }
