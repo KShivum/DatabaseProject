@@ -21,26 +21,33 @@ namespace Housekeeping.Pages.Main
         [TempData]
         public int userId { get; set; }
         public User LoginUser { get; set; }
-        public List<Room> Rooms {get; set;}
+        public List<Room> Rooms { get; set; }
         public List<User> Housekeepers { get; set; }
         [BindProperty]
         public Room CurrentRoom { get; set; }
         public async Task OnGet(int id)
         {
+
+            LoginUser = await db.User.FindAsync(HttpContext.Session.GetInt32("UserId"));
+
+            if(LoginUser == null)
+            {
+                userId = id;
+                HttpContext.Session.SetInt32("UserId", id);
+                LoginUser = await db.User.FindAsync(id);
+            }
             
-            LoginUser = await db.User.FindAsync(id);
-            userId = id;
-            HttpContext.Session.SetInt32("UserId", id);
             Rooms = await db.Room.ToListAsync();
             Housekeepers = await db.User.Where(u => u.Role.Equals("HouseKeeper")).ToListAsync();
         }
+
 
         public async Task<IActionResult> OnPostChangeStatus(int roomNo, string status, int? assignedEmployee, User user)
         {
             //var emp = assignedEmployee;
             string emp = Request.Form[$"{roomNo} select"];
             int? empId;
-            if(String.IsNullOrEmpty(emp))
+            if (String.IsNullOrEmpty(emp))
             {
                 empId = null;
             }

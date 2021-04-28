@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Housekeeping.Models;
@@ -13,9 +14,15 @@ namespace Housekeeping.Pages.Main
 {
     public class ReportModel : PageModel
     {
+        private readonly string _cs = "Server=main.shivum.xyz;port=1234;Database=housekeeping;Uid=root;Pwd=Derp123";
+
         public ChartJs Chart { get; set; }
         public string ChartJson { get; set; }
-        
+        public ChartJs MaintainanceChart { get; set; }
+        public string MaintainChartJson { get; set; }
+
+
+
         public void OnGet()
         {
             List<string> temp1 = new List<string>();
@@ -82,6 +89,41 @@ namespace Housekeeping.Pages.Main
             //            maintReq++;
             //        }
             //    }
+
+
+            //Charts the Maintainance needed for all the rooms
+
+            //Gets the data we need, it essentially gets the count of how many times a room has gone into maintainance required, HOWEVER, We can't access the data yet in code
+            MySqlDataAdapter maintainAdapter = new MySqlDataAdapter("SELECT RoomNo, Count(*) From Log Where StatusChangedTo = 'Maintainance Required' GROUP BY RoomNo ORDER BY RoomNo asc", _cs); //_cs is defined at the top
+            //Creates a dataset which is essentially a table
+            DataSet maintainDS = new DataSet();
+            //Actually puts the data we want from the SQL server into the dataset we created
+            maintainAdapter.Fill(maintainDS);
+            //Makes the two lists that we need
+            var mainRoomNos = new List<string>();
+            var mainCount = new List<int>();
+            //Fills the lists we need
+            for(int i = 0; i < maintainDS.Tables[0].Rows.Count; i++)
+            {
+                //Adds to the first list, it will loop through each row
+                //Those numbers after .Rows is .Rows[RowNumber][RowColumn]
+                //And since the value we get out of the dataset isn't technically a string, we convert it to a string
+                mainRoomNos.Add(maintainDS.Tables[0].Rows[i]["RoomNo"].ToString());
+
+                //Does the same thing but instead of converting to a string, it converts to an int
+                mainCount.Add(Convert.ToInt32(maintainDS.Tables[0].Rows[i]["Count(*)"]));
+            }
+
+            //Get the data we need for the graph
+            string maintainGraphString = ReturnGraphString(mainRoomNos, mainCount, "Maintainance Count");
+
+            //Converts the chart string we just made into a json
+            MaintainanceChart = JsonConvert.DeserializeObject<ChartJs>(maintainGraphString);
+            MaintainChartJson = JsonConvert.SerializeObject(MaintainanceChart, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            });
+
 
 
         }
