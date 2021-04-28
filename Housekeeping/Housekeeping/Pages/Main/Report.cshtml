@@ -7,6 +7,9 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Employee Information:</p>
+@{
+
+}
 <table border="1" class="table table-striped">
     <tr class="table-secondary">
         <th> Name </th>
@@ -30,3 +33,18 @@
         <th> shivum.kumar@okstate.edu </th>
     </tr>
 </table>
+
+<div class="chart-container" width="600" height="400">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+
+        var ctx = document.getElementById('myChart');
+        //We need to pass a json as the second parameter
+        var myChart = new Chart(ctx, @Html.Raw(Model.ChartJson));
+
+    });
+</script>
+
