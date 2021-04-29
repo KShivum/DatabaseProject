@@ -20,6 +20,10 @@ namespace Housekeeping.Pages.Main
         public string ChartJson { get; set; }
         public ChartJs MaintainanceChart { get; set; }
         public string MaintainChartJson { get; set; }
+        public ChartJs CleanChart { get; set; }
+        public string CleanChartJson { get; set; }
+        public ChartJs employeeCleanedChart { get; set; }
+        public string employeeCleanedChartJson { get; set; }
 
 
 
@@ -48,47 +52,6 @@ namespace Housekeeping.Pages.Main
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
-
-
-            //string _cs = "";
-            //string _users = "";
-            //using (MySqlConnection connection = new MySqlConnection(_cs))
-            //{
-            //    var _rooms = new Dataset();
-            //    MySqlDataAdapter adapter = new MySqlDataAdapter($"Select * from users = {_users}", _cs);
-            //    adapter.Fill(_rooms);
-            //    var Employees = new Dataset();
-            //    MySqlDataAdapter adapter2 = new MySqlDataAdapter($"Select * from users = {_users}", _cs);
-            //    adapter2.Fill(Employees);
-            //    int clean = 0;
-            //    int inspected = 0;
-            //    int dirty = 0;
-            //    int donotdisturb = 0;
-            //    int maintReq = 0;
-
-            //    for (int i = 0; i < _rooms.Tables[0].Rows.Count; i++)
-            //    {
-            //        if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 1)
-            //        {
-            //            clean++;
-            //        }
-            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 2)
-            //        {
-            //            inspected++;
-            //        }
-            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 3)
-            //        {
-            //            dirty++;
-            //        }
-            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 4)
-            //        {
-            //            donotdisturb++;
-            //        }
-            //        else if (Convert.ToInt32(_rooms.Tables[0].Rows[i][3]) == 5)
-            //        {
-            //            maintReq++;
-            //        }
-            //    }
 
 
             //Charts the Maintainance needed for all the rooms
@@ -123,6 +86,50 @@ namespace Housekeeping.Pages.Main
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
+
+
+
+
+            // chart for how many times a room has been cleaned
+            MySqlDataAdapter cleanAdapter = new MySqlDataAdapter("SELECT RoomNo, Count(*) From Log Where StatusChangedTo = 'Clean' GROUP BY RoomNo ORDER BY RoomNo asc", _cs);
+            DataSet cleanDS = new DataSet();
+            cleanAdapter.Fill(cleanDS);
+            var cleanRoomNos = new List<string>();
+            var cleanCount = new List<int>();
+            for (int i = 0; i < cleanDS.Tables[0].Rows.Count; i++)
+            {
+                cleanRoomNos.Add(cleanDS.Tables[0].Rows[i]["RoomNo"].ToString());
+                cleanCount.Add(Convert.ToInt32(cleanDS.Tables[0].Rows[i]["Count(*)"]));
+            }
+            string cleanGraphString = ReturnGraphString(cleanRoomNos, cleanCount, "Cleaned Count");
+            CleanChart = JsonConvert.DeserializeObject<ChartJs>(cleanGraphString);
+            CleanChartJson = JsonConvert.SerializeObject(CleanChart, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            });
+
+
+
+
+            // chart for number of rooms cleaned per employee
+            MySqlDataAdapter employeeCleanedAdapter = new MySqlDataAdapter("SELECT UserName, Count(*) from Log INNER JOIN User On Log.Assignee = User.Id WHERE Log.AssignedEmployee IS Null AND StatusChangedTo = 'Clean'  GROUP BY UserName", _cs);
+            DataSet employeeCleanedDS = new DataSet();
+            employeeCleanedAdapter.Fill(employeeCleanedDS);
+            var employeeCleanedId = new List<string>();
+            var employeeCleanedCount = new List<int>();
+            for (int i = 0; i < employeeCleanedDS.Tables[0].Rows.Count; i++)
+            {
+                employeeCleanedId.Add(employeeCleanedDS.Tables[0].Rows[i]["UserName"].ToString());
+                employeeCleanedCount.Add(Convert.ToInt32(employeeCleanedDS.Tables[0].Rows[i]["Count(*)"]));
+            }
+            string employeeCleanedGraphString = ReturnGraphString(employeeCleanedId, employeeCleanedCount, "Rooms Cleaned by each Housekeeper");
+            employeeCleanedChart = JsonConvert.DeserializeObject<ChartJs>(employeeCleanedGraphString);
+            employeeCleanedChartJson = JsonConvert.SerializeObject(employeeCleanedChart, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            });
+
+
 
 
 
