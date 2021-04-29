@@ -29,30 +29,6 @@ namespace Housekeeping.Pages.Main
 
         public void OnGet()
         {
-            List<string> temp1 = new List<string>();
-            temp1.Add("Red");
-            temp1.Add("Blue");
-            temp1.Add("Yellow");
-            temp1.Add("Green");
-            temp1.Add("Purple");
-            temp1.Add("Orange");
-
-            List<int> temp2 = new List<int>();
-            temp2.Add(12);
-            temp2.Add(19);
-            temp2.Add(3);
-            temp2.Add(5);
-            temp2.Add(2);
-            temp2.Add(3);
-
-            var chartData = ReturnGraphString(temp1, temp2, "# of Votes");
-
-            Chart = JsonConvert.DeserializeObject<ChartJs>(chartData);
-            ChartJson = JsonConvert.SerializeObject(Chart, new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-            });
-
 
             //Charts the Maintainance needed for all the rooms
 

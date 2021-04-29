@@ -9,26 +9,6 @@
 
 
 
-
-
-@*<div class="chart-container" width="600" height="400">
-        <canvas id="myChart"></canvas>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-
-            var ctx = document.getElementById('myChart');
-            //We need to pass a json as the second parameter
-            var myChart = new Chart(ctx, @Html.Raw(Model.ChartJson));
-
-        });
-
-    </script>*@
-
-
-
-
 <div class="Maintainancechart-container" width="600" height="400">
     <canvas id="maintainanceChart"></canvas>
 </div>
